@@ -117,3 +117,7 @@ Thumbs.db
 # Outros arquivos pessoais #
 static/
 media/
+
+# Arquivos específicos do projeto #
+cacert.pem
+sitecustomize.py
