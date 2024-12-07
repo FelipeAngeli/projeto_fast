@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "projeto-fast"
+version = "0.1.0"
+description = ""
+authors = ["Felipe Angeli <59125006+FelipeAngeli@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.*"
+fastapi = {extras = ["standard"], version = "^0.115.6"}
+uvicorn = {extras = ["standard"], version = "^0.32.1"}
+ignr = "^2.2"
+certifi = "^2024.8.30"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.2"
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+taskipy = "^1.14.1"
+
+[tool.black]
+line-length = 79
+
+[tool.pytest.ini_options]
+pythonpath = '.'
+addopts = '-p no:warnings'
+
+[tool.ruff]
+extend-exclude = ['migrations']
+
+[tool.taskipy.tasks]
+run = 'fastapi dev projeto_fast/main.py'
+pre_test = 'task lint'
+test = 'pytest --cov=projeto_fast -vv'
+post_test = 'coverage html'
+format = 'ruff check . --fix ; ruff format .'
+lint = 'ruff check . ; ruff check . --diff'
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,119 @@
+# Logs e arquivos de erro #
+*.log
+gunicorn-error-log
+
+# Arquivos de configuração locais #
+local_settings.py
+_local_settings.py
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+__localcode
+
+# Diretórios de ambiente virtual #
+*.py[cod]
+__pycache__/
+*.pyc
+__pycache__
+*.egg-info/
+*.eggs/
+.installed.cfg
+*.manifest
+*.spec
+*.egg
+.Python
+
+# FastAPI #
+*.db
+instance/
+*.sqlite3
+*.sqlite3-journal
+db.sqlite3
+db copy.sqlite3
+migrations/
+
+# Poetry #
+poetry.lock
+.cache
+.tox/
+
+# Arquivos de pacotes #
+build/
+dist/
+wheels/
+develop-eggs/
+sdist/
+downloads/
+lib/
+lib64/
+parts/
+var/
+
+# PyCharm #
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.xml
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/gradle.xml
+.idea/**/libraries
+*.iws
+/out/
+
+# Visual Studio Code #
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
+# Arquivos de backup #
+*.bak
+*.ipynb_checkpoints
+
+# Testes e cobertura #
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# mkdocs #
+/site
+
+# Configuração do pyenv #
+.python-version
+
+# Cache do mypy #
+.mypy_cache/
+
+# Sublime Text #
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# Jupyter Notebook #
+.ipynb_checkpoints
+
+# Sistema #
+.DS_Store
+Thumbs.db
+
+# Outros arquivos pessoais #
+static/
+media/
