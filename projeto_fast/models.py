@@ -1,7 +1,7 @@
 from datetime import datetime
-
 from sqlalchemy import func
 from sqlalchemy.orm import Mapped, mapped_column, registry
+
 
 table_registry = registry()
 
