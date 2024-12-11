@@ -1,5 +1,11 @@
-from fastapi import FastAPI, HTTPException
 from http import HTTPStatus
+
+from fastapi import Depends, FastAPI, HTTPException
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from projeto_fast.database import get_session
+from projeto_fast.models import User
 from projeto_fast.schemas import Message, UserDB, UserList, UserPublic, UserSchema
 
 
@@ -14,12 +20,32 @@ def read_root():
 
 
 @app.post("/users/", status_code=HTTPStatus.CREATED, response_model=UserPublic)
-def create_user(user: UserSchema):
-    user_with_id = UserDB(**user.model_dump(), id=len(database) + 1)
+def create_user(user: UserSchema, session: Session = Depends(get_session)):
+    db_user = session.scalar(
+        select(User).where(
+            (User.username == user.username) | (User.email == user.email)
+        )
+    )
 
-    database.append(user_with_id)
+    if db_user:
+        if db_user.username == user.username:
+            raise HTTPException(
+                status_code=HTTPStatus.BAD_REQUEST,
+                detail="Username already exists",
+            )
+        elif db_user.email == user.email:
+            raise HTTPException(
+                status_code=HTTPStatus.BAD_REQUEST,
+                detail="Email already exists",
+            )
 
-    return user_with_id
+    db_user = User(username=user.username, password=user.password, email=user.email)
+
+    session.add(db_user)
+    session.commit()
+    session.refresh(db_user)
+
+    return db_user
 
 
 @app.get("/users/", response_model=UserList)

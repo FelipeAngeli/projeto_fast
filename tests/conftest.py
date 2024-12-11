@@ -18,25 +18,30 @@ def session():
     engine = create_engine("sqlite:///:memory:")
     table_registry.metadata.create_all(engine)
 
-    with Session(engine) as session:
-        yield session
+    connection = engine.connect()
+    transaction = connection.begin()
 
+    session = Session(bind=connection)
+    yield session
+
+    session.close()
+    transaction.rollback()
+    connection.close()
     table_registry.metadata.drop_all(engine)
 
 
 @contextmanager
 def _mock_db_time(*, model, time=datetime(2024, 1, 1)):
     def fake_time_handler(mapper, connection, target):
-        if hasattr(target, "created_at"):
-            target.created_at = time
-        if hasattr(target, "updated_at"):
-            target.updated_at = time
+        for field in ("created_at", "updated_at"):
+            if hasattr(target, field):
+                setattr(target, field, time)
 
     event.listen(model, "before_insert", fake_time_handler)
-
-    yield time
-
-    event.remove(model, "before_insert", fake_time_handler)
+    try:
+        yield time
+    finally:
+        event.remove(model, "before_insert", fake_time_handler)
 
 
 @pytest.fixture
