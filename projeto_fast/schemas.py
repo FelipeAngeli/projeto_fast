@@ -20,6 +20,18 @@ class UserPublic(BaseModel):
     username: str
     email: EmailStr
 
+    class Config:
+        from_attributes = True
+
 
 class UserList(BaseModel):
     users: list[UserPublic]
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: str | None = None

@@ -1,5 +1,7 @@
 from dataclasses import asdict
+
 from sqlalchemy import select
+
 from projeto_fast.models import User
 
 

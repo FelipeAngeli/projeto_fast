@@ -1,8 +1,7 @@
 from sqlalchemy import create_engine
-from projeto_fast.settings import Settings
-
 from sqlalchemy.orm import Session
 
+from projeto_fast.settings import Settings
 
 engine = create_engine(Settings().DATABASE_URL)
 
